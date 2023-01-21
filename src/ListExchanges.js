@@ -1,4 +1,15 @@
 function ListExchanges({ ongoingExchanges }) {
+
+  const listOngoing = ongoingExchanges.map((oe, idx) => {
+    return (
+      <tr key={`ongoing-exchange-${idx}`}>
+        <td>
+          <button>{oe.exchangeName}</button>
+        </td>
+      </tr>
+    );
+  });
+
   return (
     <div className="ListExchanges">
       {ongoingExchanges && ongoingExchanges.length > 0 ?
@@ -6,13 +17,7 @@ function ListExchanges({ ongoingExchanges }) {
           <h3>List of Ongoing Exchanges</h3>
           <table>
             <tbody>
-              {ongoingExchanges.forEach((oe, idx) => {
-                <td key={`ongoing-exchange-${idx}`}>
-                  <tr>
-                    <button>{oe.exchangeName}</button>
-                  </tr>
-                </td>
-              })}
+              {listOngoing}
             </tbody>
           </table>
         </div> :
