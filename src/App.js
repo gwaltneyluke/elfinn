@@ -1,23 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import MainMenu from './MainMenu';
+import CreateExchange from './CreateExchange';
+import JoinExchange from './JoinExchange';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Welcome to ElFinn</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={ <MainMenu /> }/>
+          <Route path='/create-exchange' element={ <CreateExchange /> }/>
+          <Route path='/join-exchange' element={ <JoinExchange /> } />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
