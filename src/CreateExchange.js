@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { initialExchangeState, reducer } from './state/createExchangeState';
 
-function CreateExchange() {
+function CreateExchange({ addExchange }) {
   const [exchangeState, dispatch] = useReducer(reducer, initialExchangeState);
 
   const changeName = (e) => dispatch({ type: 'CHANGE EXCHANGE NAME', exchangeName: e.target.value });
@@ -110,7 +110,7 @@ function CreateExchange() {
           <button type='button' onClick={addMember}>Add Another Member</button>
         </span>
 
-        <button type='button'>Create Exchange!</button>
+        <button type='button' onClick={() => addExchange(exchangeState)}>Create Exchange!</button>
       </form>
 
       <Link to='/'>

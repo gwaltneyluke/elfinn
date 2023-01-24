@@ -2,16 +2,7 @@ import { Link } from 'react-router-dom';
 
 import ListExchanges from './ListExchanges';
 
-function MainMenu() {
-  let listExchanges = [
-    {
-      exchangeName: 'Gwaltney Family Exchange'
-    },
-    {
-      exchangeName: '^ Exchange'
-    }
-  ];
-
+function MainMenu({ listExchanges }) {
   return (
     <div className="MainMenu">
       <h2>Main Menu</h2>
