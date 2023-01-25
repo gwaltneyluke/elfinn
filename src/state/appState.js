@@ -6,17 +6,28 @@ const initialAppState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'ADD USER EXCHANGE':
+    case 'ADD EXCHANGE':
       return {
         ...state,
         userExchanges: [
           ...state.userExchanges,
           {
             id: uuidv4(),
-            ...action.newUserExchange
+            ...action.exchange
           }
         ]
       };
+    case 'EDIT EXCHANGE':
+      return {
+        ...state,
+        userExchanges: [
+          ...state.userExchanges.slice(0, action.idx),
+          action.exchange,
+          ...state.userExchanges.slice(action.idx+1)
+        ]
+      }
+    default:
+      return state;
   };
 };
 

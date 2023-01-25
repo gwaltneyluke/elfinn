@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import ListExchanges from './ListExchanges';
+import ListExchanges from '../components/ListExchanges';
 
 function MainMenu({ listExchanges }) {
   return (

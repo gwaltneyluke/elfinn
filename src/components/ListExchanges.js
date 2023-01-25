@@ -1,10 +1,13 @@
-function ListExchanges({ ongoingExchanges }) {
+import { Link } from "react-router-dom";
 
+function ListExchanges({ ongoingExchanges }) {
   const listOngoing = ongoingExchanges.map((oe, idx) => {
     return (
       <tr key={`ongoing-exchange-${idx}`}>
         <td>
-          <button>{oe.exchangeName}</button>
+          <Link to={`/update-exchange/${oe.id}`}>
+            <button>{oe.exchangeName}</button>
+          </Link>
         </td>
       </tr>
     );
