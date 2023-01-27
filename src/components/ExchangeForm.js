@@ -1,14 +1,18 @@
+import { useState } from 'react';
+
+import MemberForm from './MemberForm';
+
 function ExchangeForm({ exchangeState, dispatch }) {
+  const [showPass, setShowPass] = useState(false);
+
+  const changeShowPass = (e) => setShowPass(!showPass);
+
   const changeName = (e) => dispatch({ type: 'CHANGE EXCHANGE NAME', exchangeName: e.target.value });
+  const changePassword = (e) => dispatch({ type: 'CHANGE EXCHANGE PASSWORD', exchangePassword: e.target.value });
   const changeDate = (e) => dispatch({ type: 'CHANGE EXCHANGE DATE', exchangeDate: e.target.value });
   const changeWishList = (e) => dispatch({ type: 'UPDATE SETTINGS', settings: { ...exchangeState.settings, wishList: e.target.value === 'Yes' } });
   const addMember = () => dispatch({ type: 'ADD MEMBER' });
-  const deleteMember = (idx) => (e) => dispatch({ type: 'DELETE MEMBER', memberIndex: idx });
-  const changeMemberName = (idx, current) => (e) => dispatch({ type: 'UPDATE MEMBER', memberIndex: idx, member: { ...current, memberName: e.target.value } });
-  const changeMemberEmail = (idx, current) => (e) => dispatch({ type: 'UPDATE MEMBER', memberIndex: idx, member: { ...current, email: e.target.value } });
-  const changeMemberPhone = (idx, current) => (e) => dispatch({ type: 'UPDATE MEMBER', memberIndex: idx, member: { ...current, phone: e.target.value } });
-  const changeMemberContactPreference = (idx, current) => (e) => dispatch({ type: 'UPDATE MEMBER', memberIndex: idx, member: { ...current, preferredContact: e.target.value } });
-
+  
   return (
     <div>
       <h3>Exchange Details</h3>
@@ -17,6 +21,14 @@ function ExchangeForm({ exchangeState, dispatch }) {
         <span>
           <label>Exchange Name</label>
           <input type='text' id='exchange-name' defaultValue={exchangeState.exchangeName} onChange={changeName}/>
+        </span>
+      </div>
+
+      <div>
+        <span>
+          <label>Exchange Password</label>
+          <input type={showPass ? 'text' : 'password'} id='exchange-password' onChange={changePassword}/>
+          <button type='button' onClick={changeShowPass}>{showPass ? 'Hide' : 'Show'}</button>
         </span>
       </div>
 
@@ -43,57 +55,7 @@ function ExchangeForm({ exchangeState, dispatch }) {
 
       {[...Array(exchangeState.members.length).keys()].map((idx) => {
         const currentMember = exchangeState.members[idx];
-        return (
-          <div key={`member-${idx+1}`}>
-            <h4>Member {idx+1}</h4>
-            
-            <div>
-              <span>
-                <label>Name</label>
-                <input type='text' id={`member-${idx+1}-name`} defaultValue={currentMember.memberName} onChange={changeMemberName(idx, currentMember)} />
-              </span>
-            </div>
-
-            <div>
-              <span>
-                <label>Email</label>
-                <input type='text' id={`member-${idx+1}-email`} defaultValue={currentMember.email} onChange={changeMemberEmail(idx, currentMember)} />
-              </span>
-            </div>
-
-            <div>
-              <span>
-                <label>Phone Number</label>
-                <input type='text' id={`member-${idx+1}-phone`} defaultValue={currentMember.phone} onChange={changeMemberPhone(idx, currentMember)} />
-              </span>
-            </div>
-
-            <div>
-              <span>
-                <label>Send Updates Through:</label>
-                <input 
-                  type='radio' 
-                  id={`email-member-${idx+1}-form-of-contact`} 
-                  name={`rb-form-of-contact-${idx+1}`} 
-                  value='email' 
-                  defaultChecked={currentMember.preferredContact === 'email'}
-                  onChange={changeMemberContactPreference(idx, currentMember)}
-                />
-                <label>Email</label>
-                <input 
-                  type='radio' 
-                  id={`text-member-${idx+1}-form-of-contact`} 
-                  name={`rb-form-of-contact-${idx+1}`} 
-                  value='text' 
-                  defaultChecked={currentMember.preferredContact === 'text'}
-                  onChange={changeMemberContactPreference(idx, currentMember)}/>
-                <label>Text</label>
-              </span>
-            </div>
-
-            <button type='button' onClick={deleteMember(idx)}>Delete Member</button>
-          </div>
-        );
+        return ( <MemberForm idx={idx} member={currentMember} dispatch={dispatch} />);
       })}
 
       <span>

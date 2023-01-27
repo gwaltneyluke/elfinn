@@ -10,6 +10,7 @@ const initialMemberState = {
 
 const initialExchangeState = {
   exchangeName: '',
+  exchangePassword: '',
   exchangeDate: DateTime.now().toFormat('yyyy-MM-dd'),
   settings: {
     wishList: true
@@ -55,6 +56,12 @@ function reducer(state, action) {
         ...state,
         exchangeName: action.exchangeName
       }
+      case 'CHANGE EXCHANGE PASSWORD':
+        console.log(`change password ${action.exchangePassword}`);
+        return {
+          ...state,
+          exchangePassword: action.exchangePassword
+        }
     case 'CHANGE EXCHANGE DATE':
       console.log(`change date ${action.exchangeDate}`);
       return {
@@ -80,6 +87,10 @@ function reducer(state, action) {
           ...state.members.slice(action.memberIndex+1)
         ]
       }
+    default:
+      return {
+        ...state
+      };
   }
 }
 

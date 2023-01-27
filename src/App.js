@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainMenu from './pages/MainMenu';
 import CreateExchange from './pages/CreateExchange';
 import JoinExchange from './pages/JoinExchange';
+import JoinExchangeSelector from './pages/JoinExchangeSelector';
 import UpdateExchange from './pages/UpdateExchange';
 import { initialAppState, reducer } from './state/appState';
 
@@ -23,7 +24,8 @@ function App() {
           <Route path='/' element={ <MainMenu listExchanges={state.userExchanges} /> }/>
           <Route path='/create-exchange' element={ <CreateExchange addExchange={addExchange} /> }/>
           <Route path='/update-exchange/:exchangeId' element={ <UpdateExchange editExchange={editExchange} exchanges={state.userExchanges} /> } />
-          <Route path='/join-exchange' element={ <JoinExchange /> } />
+          <Route path='/join-exchange' element={ <JoinExchangeSelector exchanges={state.userExchanges} />} />
+          <Route path='/join-exchange/:exchangeId' element={ <JoinExchange exchanges={state.userExchanges} /> } />
         </Routes>
       </BrowserRouter>
     </div>
