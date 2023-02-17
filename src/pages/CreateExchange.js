@@ -13,10 +13,12 @@ function CreateExchange({ addExchange }) {
 
       <ExchangeForm exchangeState={exchangeState} dispatch={dispatch} />
 
-      <button type='button' onClick={() => addExchange(exchangeState)}>Create Exchange!</button>
+      <Link to='/' onClick={() => addExchange(exchangeState)}>
+        <button type='button'>Create Exchange!</button>
+      </Link>
 
       <Link to='/'>
-        <button type='button'>Main Menu</button>
+        <button type='button'>Cancel</button>
       </Link>
     </div>
   );

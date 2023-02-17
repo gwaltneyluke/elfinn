@@ -16,7 +16,9 @@ function UpdateExchange({ editExchange, exchanges }) {
 
       <ExchangeForm exchangeState={exchangeState} dispatch={dispatch} />
 
-      <button type='button' onClick={() => editExchange(exchangeState, exchangeIndex)}>Update Exchange</button>
+      <Link to='/' onClick={() => editExchange(exchangeState, exchangeIndex)}>
+        <button type='button'>Update Exchange</button>
+      </Link>
 
       <Link to='/'>
         <button type='button'>Main Menu</button>

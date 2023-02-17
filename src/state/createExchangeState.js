@@ -5,15 +5,17 @@ const initialMemberState = {
   memberName: '',
   email: '',
   phone: '',
-  preferredContact: 'email'
+  preferredContact: 'email',
+  exclusions: []
 };
 
 const initialExchangeState = {
   exchangeName: '',
-  exchangePassword: '',
-  exchangeDate: DateTime.now().toFormat('yyyy-MM-dd'),
+  drawDate: DateTime.now().toFormat('yyyy-MM-dd'),
+  exchangeDate: DateTime.fromObject({ month: 12, day: 25 }).toFormat('yyyy-MM-dd'),
   settings: {
-    wishList: true
+    wishList: true,
+    numberOfDraws: 1
   },
   members: [
     {
@@ -56,12 +58,12 @@ function reducer(state, action) {
         ...state,
         exchangeName: action.exchangeName
       }
-      case 'CHANGE EXCHANGE PASSWORD':
-        console.log(`change password ${action.exchangePassword}`);
-        return {
-          ...state,
-          exchangePassword: action.exchangePassword
-        }
+    case 'CHANGE DRAW DATE':
+      console.log(`change draw date ${action.drawDate}`);
+      return {
+        ...state,
+        drawDate: action.drawDate
+      }
     case 'CHANGE EXCHANGE DATE':
       console.log(`change date ${action.exchangeDate}`);
       return {
@@ -81,8 +83,23 @@ function reducer(state, action) {
         members: [
           ...state.members.slice(0, action.memberIndex),
           {
-            id: uuidv4(),
             ...action.member
+          },
+          ...state.members.slice(action.memberIndex+1)
+        ]
+      }
+    case 'ADD MEMBER EXCLUSION':
+      console.log(`add member exclusion: ${action.memberIndex}`);
+      return {
+        ...state,
+        members: [
+          ...state.members.slice(0, action.memberIndex),
+          {
+            ...action.member,
+            exclusions: [
+              ...state.members[action.memberIndex].exclusions,
+              ''
+            ]
           },
           ...state.members.slice(action.memberIndex+1)
         ]
