@@ -6,7 +6,8 @@ function ExchangeForm({ exchangeState, dispatch }) {
   const changeExchangeDate = (e) => dispatch({ type: 'CHANGE EXCHANGE DATE', exchangeDate: e.target.value });
   const changeWishList = (e) => dispatch({ type: 'UPDATE SETTINGS', settings: { ...exchangeState.settings, wishList: e.target.value === 'Yes' } });
   const changeNumDraws = (e) => dispatch({ type: 'UPDATE SETTINGS', settings: { ...exchangeState.settings, numberOfDraws: e.target.value } });
-  const addMember = () => dispatch({ type: 'ADD MEMBER' });
+  const addMember = () =>  dispatch({ type: 'ADD MEMBER' });
+  const deleteMember = (idx) => () => dispatch({ type: 'DELETE MEMBER', memberIndex: idx });
   
   return (
     <div>
@@ -56,7 +57,8 @@ function ExchangeForm({ exchangeState, dispatch }) {
 
       {[...Array(exchangeState.members.length).keys()].map((idx) => {
         const currentMember = exchangeState.members[idx];
-        return ( <MemberForm key={idx} idx={idx} member={currentMember} listMembers={exchangeState.members} dispatch={dispatch} />);
+        const id = currentMember.id;
+        return ( <MemberForm key={id} id={id} member={currentMember} listMembers={exchangeState.members} deleteMember={deleteMember(idx)} dispatch={dispatch} />);
       })}
 
       <span>
