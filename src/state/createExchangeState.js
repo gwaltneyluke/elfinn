@@ -104,6 +104,22 @@ function reducer(state, action) {
           ...state.members.slice(action.memberIndex+1)
         ]
       }
+      case 'DELETE MEMBER EXCLUSION':
+        console.log(`delete member exclusion: ${action.memberIndex} ${action.exclusionIdx}`);
+        return {
+          ...state,
+          members: [
+            ...state.members.slice(0, action.memberIndex),
+            {
+              ...action.member,
+              exclusions: [
+                ...state.members[action.memberIndex].exclusions.slice(0, action.exclusionIdx),
+                ...state.members[action.memberIndex].exclusions.slice(action.exclusionIdx+1)
+              ]
+            },
+            ...state.members.slice(action.memberIndex+1)
+          ]
+        }
     default:
       return {
         ...state

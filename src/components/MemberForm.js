@@ -6,6 +6,7 @@ function MemberForm({id, member, listMembers, deleteMember, dispatch}) {
   const changeMemberPhone = (e) => dispatch({ type: 'UPDATE MEMBER', memberIndex: index, member: { ...member, phone: e.target.value } });
   const changeMemberContactPreference = (e) => dispatch({ type: 'UPDATE MEMBER', memberIndex: index, member: { ...member, preferredContact: e.target.value } });
   const addMemberExclusion = (e) => dispatch({ type: 'ADD MEMBER EXCLUSION', memberIndex: index, member });
+  const deleteMemberExclusion = (excIdx) => (e) => dispatch({ type: 'DELETE MEMBER EXCLUSION', memberIndex: index, member, exclusionIdx: excIdx });
 
   return (
     <div key={`member-${id}`}>
@@ -60,22 +61,21 @@ function MemberForm({id, member, listMembers, deleteMember, dispatch}) {
           return (
             <div key={`member-${id}-exclusion-${excIdx+1}`}>
               <span>
-                <label>Exclusion {excIdx+1}</label>
+                <label>Exclude </label>
                 <select name={`exclusion-${excIdx+1}`} id={`exclusion-${excIdx+1}`}>
-                  {listMembers.map(mem => {
-                    if (mem.id !== member.id) {
+                  {listMembers.filter(mem => mem.id !== member.id).map(mem => {
                       return (<option value={mem.memberName} selected={mem.id === exclusion}>{mem.memberName}</option>);
-                    } else {
-                      return;
-                    }
-                    
                   })}
                 </select>
+                <label> from {member.memberName}'s draw</label>
+                <button type='button' onClick={deleteMemberExclusion(excIdx)}>Delete Exclusion</button>
               </span>
             </div>
           )
         })}
-        <button type='button' onClick={addMemberExclusion}>Add Exclusion</button>
+        {(member.exclusions.length > 1) || 
+          (<button type='button' onClick={addMemberExclusion}>Add Exclusion</button>)
+        }
       </div>
 
       <button type='button' onClick={deleteMember}>Delete Member</button>
